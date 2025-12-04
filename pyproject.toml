@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataset-matcher"
+version = "0.1.0"
+description = "Match datasets (file lists) by basename across directories"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "SlicerMorph Team", email = "SlicerMorph@outlook.com"}
+]
+keywords = ["dataset", "file matching", "basename", "slicer", "morphometrics"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+fuzzy = ["rapidfuzz>=3.0.0"]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/SlicerMorph/dataset-matcher"
+Repository = "https://github.com/SlicerMorph/dataset-matcher"
+Issues = "https://github.com/SlicerMorph/dataset-matcher/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/dataset_matcher/__init__.py
+src/dataset_matcher/exceptions.py
+src/dataset_matcher/matcher.py
+src/dataset_matcher/py.typed
+src/dataset_matcher.egg-info/PKG-INFO
+src/dataset_matcher.egg-info/SOURCES.txt
+src/dataset_matcher.egg-info/dependency_links.txt
+src/dataset_matcher.egg-info/requires.txt
+src/dataset_matcher.egg-info/top_level.txt
+tests/test_matcher.py
