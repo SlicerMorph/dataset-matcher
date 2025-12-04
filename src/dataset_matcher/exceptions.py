@@ -55,3 +55,18 @@ class EmptyDatasetError(DatasetError):
         """
         super().__init__(message)
         self.dataset_name = dataset_name
+
+
+class IdenticalDatasetError(DatasetError):
+    """Raised when primary and secondary datasets are identical."""
+    
+    def __init__(self, message: str, dataset_name: str | None = None):
+        """
+        Initialize IdenticalDatasetError.
+        
+        Args:
+            message: Error description
+            dataset_name: Optional name of the secondary dataset
+        """
+        super().__init__(message)
+        self.dataset_name = dataset_name

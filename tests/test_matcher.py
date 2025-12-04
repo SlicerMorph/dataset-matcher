@@ -7,6 +7,7 @@ import tempfile
 import pytest
 
 from dataset_matcher import (
+    IdenticalDatasetError,
     match_datasets,
     match_multiple,
     get_basename,
@@ -420,3 +421,41 @@ class TestIntegration:
         
         assert matched[0] is not None
         assert matched[1] is None
+
+
+class TestIdenticalDatasets:
+    """Tests for identical dataset detection."""
+    
+    def test_identical_datasets_raises(self):
+        """Test that identical datasets raise IdenticalDatasetError."""
+        files = ["/a/file1.nii.gz", "/a/file2.nii.gz"]
+        
+        with pytest.raises(IdenticalDatasetError):
+            match_datasets(files, files)
+    
+    def test_identical_datasets_different_order(self):
+        """Test that identical datasets in different order still raise."""
+        primary = ["/a/file1.nii.gz", "/a/file2.nii.gz"]
+        secondary = ["/a/file2.nii.gz", "/a/file1.nii.gz"]
+        
+        with pytest.raises(IdenticalDatasetError):
+            match_datasets(primary, secondary)
+    
+    def test_identical_datasets_with_name(self):
+        """Test that dataset name appears in error."""
+        files = ["/a/file1.nii.gz"]
+        
+        with pytest.raises(IdenticalDatasetError) as exc_info:
+            match_datasets(files, files, name="landmarks")
+        
+        assert exc_info.value.dataset_name == "landmarks"
+        assert "landmarks" in str(exc_info.value)
+    
+    def test_same_basenames_different_paths_ok(self):
+        """Test that same basenames but different paths work fine."""
+        primary = ["/a/file1.nii.gz", "/a/file2.nii.gz"]
+        secondary = ["/b/file1.nii.gz", "/b/file2.nii.gz"]
+        
+        # Should NOT raise - different paths mean different files
+        result = match_datasets(primary, secondary)
+        assert result == secondary

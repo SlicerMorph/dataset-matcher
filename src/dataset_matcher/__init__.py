@@ -14,6 +14,7 @@ from .matcher import (
 
 from .exceptions import (
     DatasetError,
+    IdenticalDatasetError,
     UnmatchedFileError,
     AmbiguousMatchError,
     EmptyDatasetError,
@@ -32,6 +33,7 @@ __all__ = [
     "UnmatchedFileError",
     "AmbiguousMatchError",
     "EmptyDatasetError",
+    "IdenticalDatasetError",
     # Version
     "__version__",
 ]

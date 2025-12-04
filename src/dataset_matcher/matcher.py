@@ -7,6 +7,7 @@ from typing import Sequence, Literal
 
 from .exceptions import (
     DatasetError,
+    IdenticalDatasetError,
     UnmatchedFileError,
     AmbiguousMatchError,
     EmptyDatasetError,
@@ -153,6 +154,7 @@ def match_datasets(
         EmptyDatasetError: If either dataset is empty
         UnmatchedFileError: If files cannot be matched (and allow_missing=False)
         AmbiguousMatchError: If multiple files match the same basename
+        IdenticalDatasetError: If primary and secondary datasets are identical
         
     Examples:
         >>> volumes = ["/scans/spec_001.nii.gz", "/scans/spec_002.nii.gz"]
@@ -171,6 +173,15 @@ def match_datasets(
         raise EmptyDatasetError(
             f"Secondary dataset{f' ({name})' if name else ''} is empty",
             dataset_name=name or "secondary"
+        )
+    
+    # Check for identical datasets
+    if set(primary) == set(secondary):
+        dataset_desc = f" ({name})" if name else ""
+        raise IdenticalDatasetError(
+            f"Primary and secondary{dataset_desc} datasets are identical. "
+            "This may indicate the same files were selected for both inputs.",
+            dataset_name=name
         )
     
     # Build index of secondary files
