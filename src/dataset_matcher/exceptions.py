@@ -2,6 +2,8 @@
 Custom exceptions for dataset-matcher.
 """
 
+from __future__ import annotations
+
 
 class DatasetError(Exception):
     """Base exception for dataset matching errors."""
